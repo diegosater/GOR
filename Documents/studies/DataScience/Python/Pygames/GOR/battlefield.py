@@ -3,11 +3,8 @@ class Battlefield():
     def __init__(self, player_name):
         self.player_name = player_name
 
-    def build_battlefield():
-        pass
-
-    def receive_card(card):
-        pass
+    def receive_card(card, cards_on_battlefield):
+        cards_on_battlefiled = cards_on_battlefield
 
     def change_mode_one_card(card):
         pass
@@ -20,6 +17,7 @@ class Battlefield():
         pass
 
     def is_empty():
+
         pass
 
     def is_full():

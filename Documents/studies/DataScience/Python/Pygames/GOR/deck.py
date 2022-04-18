@@ -6,11 +6,34 @@ import battlefield
 
 class Deck():
 
-    def __init__(self, name, card_list):
-        # Can be P1_deck or P1_hand (as so to others Ps) or Semetary
-        self.deck_name = name
-        self.deck_cards = []
-        self.deck_cards = card_list
+    def __init__(self, player_name, deck_type, players_cards_ids):
+
+        # Can be P1_deck or P1_hand (as so to others Ps) or Semetary types
+      
+        self.deck_player_name = player_name
+        self.deck_type = deck_type  # Can be player_hand or player_full_deck     
+        self.first_deck_of_cards = self.create_new_deck(players_cards_ids)
+
+    def create_new_deck(self, player_cards_ids):
+
+        self.set_of_cards_ids = player_cards_ids
+        self.deck_of_cards = []
+
+        for card_id in self.set_of_cards_ids:
+            self.cards_on_deck = card.Card(card_id)     
+            self.deck_of_cards.append(self.cards_on_deck)
+            print("First deck of player: "+ str(self.deck_player_name)+"\n ->"
+                                          +str(self.deck_of_cards))
+        return self.deck_of_cards
+
+    def __iter__(self):
+        return self
+
+    def add_card_to_deck(self,card_to_add):    
+        pass
+
+    def add_cards_to_battlefield():
+        pass
 
     def evil_key():
         '''Exchange decks between a Player chosen by who use the evil_key and itself'''
@@ -19,6 +42,7 @@ class Deck():
 
 class Semetary(Deck):
     def __init__(self, dead_card):
+        super().__init__(self, self.deck_player_name, self.deck_type, self.deck_cards)
         self.has_it_atacked = []
         self.has_it_not_attacked = []
         self.killed_by_avalanche = []

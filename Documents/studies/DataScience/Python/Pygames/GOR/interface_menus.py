@@ -8,6 +8,7 @@ class Menu:
     number_of_players = 0
     deck_size_ids = list(range(55))
     list_of_cards_ids = []
+    players_data ={}
 
     def __init__(self):
         self.choices = {
@@ -52,13 +53,21 @@ class Menu:
 
     def start_game(self):
         '''Firstly we must divide the list of cards (full_deck) among each player'''
-        ''' Total number of cards (54) divided by number of Players '''
+        ''' Total number of cards (54) divided by number of Players'''
+        start = 0
         player_deck_size = int(54/int(self.number_of_players))
-        for i in range(0, 54, player_deck_size):
-            '''Secondly build up a structure (dictionary) to return to __init__'''
-            players_data = {self.players_names[i]: self.list_of_cards_ids[i:i + player_deck_size]
-                            for i in range(len(self.players_names))}
-            return players_data
+        while player_deck_size <= 54:
+            for name in self.players_names: 
+                '''Secondly build up a structure (dictionary) to return to __init__'''
+                self.players_data.update({name:self.list_of_cards_ids[start:player_deck_size]
+                                             for j in range(0,55)})
+                # print(" começando em: "+str(start)+" terminando em: "
+                #  +str(player_deck_size)+" de tamanho: "+str(len(players_data[name])))
+                # print(self.players_data)
+                start = player_deck_size
+                player_deck_size *= 2 
+                #print(self.players_data)
+            #return players_data
 
     def quit(self):
         '''Exit the game Menu'''
@@ -66,11 +75,14 @@ class Menu:
 
     def run(self):
         '''Display the menu and respond to choices.'''
-        while True:
+        choice = 0
+        while choice!= '4':
             self.display_menu()
             choice = input("Enter an option: ")
             action = self.choices.get(choice)
             if action:
                 action()
+                if choice=='4':
+                   return self.players_data 
             else:
                 print("{0} is not a valid choice".format(choice))

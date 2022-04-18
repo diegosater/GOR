@@ -24,44 +24,35 @@ from turtle import end_fill
 from typing import overload
 
 
-#card_dict ={'character_name':[id,'realm',atack_value,defense_value, magic_power]
-#is_hidden=False, mode='atack', has_attacked=False, avalanche=True}
-cards_data = {'IRONION': [1, 'human', 500, 3000, 'win_smith', False, 'atack', False, False],
-              'ABRATIKAN': [2, 'inhuman', 700, 300, 'show_hidden_cards', 'atack', False, False],
-              'JRAMARJ': [3, 'betume', 1600, 900, 'change_modes', 'atack', False, False],
-              'SOUTHER': [4, 'fire_devil', 2500, 1500, None, 'atack', False, False]
-              }
-
-realms_list = ['human', 'inhuman', 'betume', 'fire_devil']
-
-
 class GOR():
-
+    
     game_status = 'finished'
 
-    def __init__(self, players_names):
-        self.players_names = players_names
-        for i, player in self.players_names:
+    def __init__(self, **players_names_and_decks):
+        self.players_names_and_decks = players_names_and_decks
+        self.players_started = []
+        for index, (key, value) in enumerate(self.players_names_and_decks.items()):
             ''' Creates the Players to start the game'''
-            self.players[i] = Player(players_names[i])
-        if self.players:
+            print("\nCreating Players..."+str(index)+
+                   "\nPlayer's name : "+str(key)+
+                   "\nPlayer's cards sent to Player class:"+str(value))
+            new_player = Player.A_player(players_names_and_decks.keys(),
+                                          players_names_and_decks.values())
+            self.players_started.append(new_player)
+            print("Cards created for player: {}".format(self.players_started[index]))
+        if self.players_started:
             self.game_status = 'started'
         else:
-            print("It seems something wrong occuren during creating players")
+            print("It seems something wrong occured during creating players")
             GOR.self.game_status = 'finished'
 
 #Define status of a battlefiled in a game
-    def create_Players_deck():
-        pass
-
-    def create_battlefield():
-        pass
-
     def get_result():
         pass
 
 
 if __name__ == '__main__':
     '''Don't forget parenthesis after instanciate calls'''
-    players_names = interface_menus.Menu().run()
-    new_GOR_game = GOR(players_names)
+    players_names_and_decks = interface_menus.Menu().run()
+    # print(players_names_and_decks)
+    new_GOR_game = GOR(**players_names_and_decks)  # dict{player_name:[deck_ids]}
